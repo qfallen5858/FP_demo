@@ -305,4 +305,12 @@ public class FPJna {
         }
         return image;
     }
+
+    public static byte[] BmpToRawData(byte[] bydata, int X, int Y){
+        byte[] rawData = new byte[X * Y];
+        for (int i = 0; i < Y; i++){
+            System.arraycopy(bydata, bydata.length - 1 - X* Y + i * X, rawData, i*X, X);
+        }
+        return rawData;
+    }
 }

@@ -6,6 +6,7 @@ import org.kanq.fingerprint.FPJna;
 import org.kanq.fingerprint.FPMsg;
 import org.kanq.fingerprint.FpCallback;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -170,7 +171,27 @@ public class Demo {
             mFPJna.CloseDevice();
             return;
         }
-        iRet = mFPJna.MatchTemplate(pbyFpTemplate, pByFpData, 3);
+        String path = "emroll1.bmp";
+        FileInputStream fis = null;
+        byte[] d = new byte[FPJna.FP_IMAGE_WIDTH * FPJna.FP_IMAGE_HEIGHT + 1078];
+        try {
+            fis = new FileInputStream(path);
+            int len = fis.read(d);
+            System.out.println("read data:" + len);
+        }catch (IOException ioe){
+            ioe.printStackTrace();
+        }finally {
+            if(fis != null){
+                try {
+                    fis.close();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        byte[] pByInFile = FPJna.BmpToRawData(d, FPJna.FP_IMAGE_WIDTH, FPJna.FP_IMAGE_HEIGHT);
+        iRet = mFPJna.MatchTemplate(pByInFile, pByFpData, 3);
         if(FPJna.FP_SUCCESS != iRet){
             System.out.println("MatchTemplate failed:" + iRet);
             mFPJna.CloseDevice();
