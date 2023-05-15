@@ -24,6 +24,10 @@ public class FPJna {
     public static final int FP_MSG_ENROLL_TIME	=2;//注册次数
     public static final int FP_MSG_CAPTURED_IMAGE=3;//采集图像
 
+    public static final int FP_STATUS_DETECT_NO = 0; //检测时有指纹输入
+
+    public static final int FP_STATUS_DETECT_YES = 1; //检测时没有指纹输入
+
     Jna mJna;
     public void LoadLibrary() {
 
